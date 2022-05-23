@@ -1,0 +1,192 @@
+     Name- Yogeshwari Bulbule
+     RollNO-220340320138
+    
+  1) TABLE
+ 	create table DEPT(
+        DEPTNO int(2),
+       DNAME varchar(15),
+        LOC varchar(10)
+        );
+insert into DEPT(DEPTNO,DName,LOC)value
+(10,'ACCOUNTING','NEW YORK'),
+(20,'RESEARCH','DALLAS'),
+(30,'SALES','CHICAGO'),
+(40,'OPERATIONS','BOSTON');
+
+2) TABLE
+
+ create table emp(
+EMONO int(4),
+ENAME varchar(10),
+JOB varchar(9),
+HIREDATE date,
+SAL float(7,2),
+COMM float(7,2),
+DEPTNO int(2)
+);
+
+insert into EMP values
+(7839,'KING','MANAGER','1991-11-17',5000,NULL,10),
+(7698,'BLAKE','CLERK','1981-05-01',2850,NULL,30),
+(7782, 'CLARK','MANAGER' ,'1981-06-09', 2450 ,NULL, 10),
+(7566 ,'JONES', 'CLERK', '1981-04-02',2975 ,NULL, 20),
+(7654, 'MARTIN', 'SALESMAN', '1981-09-28', 1250, 1400 ,30),
+(7499, 'ALLEN', 'SALESMAN', '1981-02-20', 1600 ,300 , 30);
+
+
+Q 3  
+
+select * from emp
+   where sal between 2500 and 5000;
++-------+-------+---------+------------+---------+------+--------+
+| EMONO | ENAME | JOB     | HIREDATE   | SAL     | COMM | DEPTNO |
++-------+-------+---------+------------+---------+------+--------+
+|  7839 | KING  | MANAGER | 1991-11-17 | 5000.00 | NULL |     10 |
+|  7698 | BLAKE | CLERK   | 1981-05-01 | 2850.00 | NULL |     30 |
+|  7566 | JONES | CLERK   | 1981-04-02 | 2975.00 | NULL |     20 |
+
+-------------------------------------------------------------------------------------
+Q 4
+
+select ENAME from emp
+     order by ENAME desc;
++--------+
+| ENAME  |
++--------+
+| MARTIN |
+| KING   |
+| JONES  |
+| CLARK  |
+| BLAKE  |
+| ALLEN  |
+-----------------------------------------------
+Q5
+select lower(job)from emp;
++------------+
+| lower(job) |
++------------+
+| manager    |
+| clerk      |
+| manager    |
+| clerk      |
+| salesman   |
+| salesman
+
+-------------------------------------------------
+Q 6
+ select  ENAME,length(ENAME) from emp;
++--------+---------------+
+| ENAME  | length(ENAME) |
++--------+---------------+
+| KING   |             4 |
+| BLAKE  |             5 |
+| CLARK  |             5 |
+| JONES  |             5 |
+| MARTIN |             6 |
+| ALLEN  |             5 |
+-------------------------------------------------
+
+Q 7
+
+select DEPTNO ,count(DEPTNO) from emp group by DEPTNO;
+
+
++--------+---------------+
+| DEPTNO | count(DEPTNO) |
++--------+---------------+
+|     10 |             2 |
+|     30 |             3 |
+|     20 |             1 |
+--------------------------------------------
+
+Q8
+
+ select ENAME,DNAME from EMP,DEPT where DEPT.DEPTNO=EMP.DEPTNO;
++--------+------------+
+| ENAME  | DNAME      |
++--------+------------+
+| KING   | ACCOUNTING |
+| BLAKE  | SALES      |
+| CLARK  | ACCOUNTING |
+| JONES  | RESEARCH   |
+| MARTIN | SALES      |
+| ALLEN  | SALES
+------------------------------------------------------
+
+Q9
+  select ENAME, INSTR(ENAME,'AR')from emp;
++--------+-------------------+
+| ENAME  | INSTR(ENAME,'AR') |
++--------+-------------------+
+| KING   |                 0 |
+| BLAKE  |                 0 |
+| CLARK  |                 3 |
+| JONES  |                 0 |
+| MARTIN |                 2 |
+| ALLEN  |                 0 |
+
+-----------------------------------------------------------------
+
+Q10
+
+SELECT ENAME,SAL * 0.2 AS HRA FROM EMP;
++--------+---------+
+| ENAME  | HRA     |
++--------+---------+
+| KING   | 1000.00 |
+| BLAKE  |  570.00 |
+| CLARK  |  490.00 |
+| JONES  |  595.00 |
+| MARTIN |  250.00 |
+| ALLEN  |  320.00
+---------------------------------------------------
+
+  Section II
+ 
+ceate table tempp( 
+i int ,str varchar(30)
+ );
+
+
+   delimiter//
+  create procedure proc1(str1 varchar(10),str2 varchar (10))
+begin
+declare x int default 0;
+set x=instr(str2,str1);     
+ if(x=0) then
+insert into tempp(i,str) values(0,"string is exist");
+else
+insert into tempp(i,str) values(1,"string is exist");
+end if;
+end //
+
+delimiter ;
+select * from tempp;
+
+call proc1('DAC','CDAC');
+
+
+--------------------------------
+
+
+
+deterministic
+ begin 
+
+
+delimiter //
+ create function FUNC1( x,int ,y int,z int)
+return boolean
+deterministic
+begin
+if(x+y >z) and (x+z >y) and (y+z >z) then 
+delimiter //
+return true;
+else
+return false;
+end if;
+end //
+
+delimiter ;
+select FUNC!(3,6,7);
+
